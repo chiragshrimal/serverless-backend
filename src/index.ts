@@ -7,11 +7,15 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
-import {env} from 'hono/adapter';
+// if we use enviornment variable then 
+// we have to configure in the clodeflare enviornment variable 
+// import {env} from 'hono/adapter';
 
 const app = new Hono();
 
-app.post("/",async(c)=>{
+// in the serverless there is no concept of global variable 
+
+app.post("/",async (c)=>{
   // Todo add zod validation here 
   const {name, email, password}=await c.req.json();
   
@@ -22,15 +26,22 @@ app.post("/",async(c)=>{
   }
 
   // take database url from the env 
-  const {DATABASE_URL}=env<{DATABASE_URL:string}>(c)
+  // const {DATABASE_URL}=env<{DATABASE_URL:string}>(c)
 
   //  create prisma client from the that DATABASE_URL
+  // ***************
+  // why we are creating prismaClient in this why not globally 
+  // bacause we are creating the connection with the connection pool so 
+  // whenever any request comes it will create new connection 
   const prisma = new PrismaClient({
-    datasourceUrl: DATABASE_URL,
+    // @ts-ignore
+    // we have to also update the wrangler.jsonc file m vars so that when we redploy then 
+    // theat change into the clodflare are persistent 
+    datasourceUrl: c.env.DATABASE_URL
   }).$extends(withAccelerate());
 
   // create the user in the database 
-  await prisma.user.create({
+  const user=await prisma.user.create({
     data:{
       name,
       email,
@@ -38,8 +49,12 @@ app.post("/",async(c)=>{
     }
   });
 
+  // console.log(name,password, email);
+
   return c.json({
-    message : "user is created"
+    id: user.id
   })
 
 })
+
+export default app;
