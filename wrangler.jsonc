@@ -6,6 +6,8 @@
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
+  // if we dont want these variables dont change redeployment 
+  // then we can write on the 
   "vars": {
     "DATABASE_URL": "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19EN2Q1b1FzSkpvOEhlME82QjZMUkoiLCJhcGlfa2V5IjoiMDFLMzhGUlBGWjBERTRUV000Q0MzTU1TQlYiLCJ0ZW5hbnRfaWQiOiI0ZjljZjkwOWE3NzU3NjcwNTAyMmZmMWZkMGE0OGMxOWIxYjhiNjZjYmNkMDllODU0YmEzMmYxYmUzN2MzNzBjIiwiaW50ZXJuYWxfc2VjcmV0IjoiYTE0MWRmNTctMzAzYy00NTU0LWIwMzktMmU2NWYxZDcyZDhiIn0.PYHUUpflTqOkEwqMLCpM7oeEaGIsBM6G1s__EEII_Rk"
   },
