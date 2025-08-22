@@ -15,6 +15,19 @@ const app = new Hono();
 
 // in the serverless there is no concept of global variable 
 
+
+
+// added midddleware 
+app.use(async (c, next) => {
+  if (c.req.header("Authorization")) {
+    console.log("auth header find");
+    await next();  // make sure to return this
+  } else {
+    return c.text("you dont have access");
+  }
+});
+
+
 app.post("/",async (c)=>{
   // Todo add zod validation here 
   const {name, email, password}=await c.req.json();
